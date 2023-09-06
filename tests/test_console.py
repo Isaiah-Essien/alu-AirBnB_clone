@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This script defines all the unittests for console.py.
+"""Defines all the unittests for console.py.
 
 Unittest classes:
     TestHBNBCommand_prompting
