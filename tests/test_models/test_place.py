@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-""" Defines unittests for models/place.py.
+"""Defines unittests for models/place.py.
 
 Unittest classes:
     TestPlace_instantiation
     TestPlace_save
     TestPlace_to_dict
-    """
-
+"""
 import os
 import models
 import unittest
@@ -15,20 +14,20 @@ from time import sleep
 from models.place import Place
 
 
-class TestPlace_instatiation(unittest.TestCase):
-    """Unittess for testing instatiation of the place class."""
+class TestPlace_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the Place class."""
 
-    def test_no_args_instatiates(self):
-        self.assertEqual(Place, type(Place())
+    def test_no_args_instantiates(self):
+        self.assertEqual(Place, type(Place()))
 
     def test_new_instance_stored_in_objects(self):
         self.assertIn(Place(), models.storage.all().values())
 
     def test_id_is_public_str(self):
-        self.assertEqual(datetime, type(Place().id))
+        self.assertEqual(str, type(Place().id))
 
     def test_created_at_is_public_datetime(self):
-        self.assertEqual(datetime, type(place().created_at))
+        self.assertEqual(datetime, type(Place().created_at))
 
     def test_updated_at_is_public_datetime(self):
         self.assertEqual(datetime, type(Place().updated_at))
@@ -52,10 +51,10 @@ class TestPlace_instatiation(unittest.TestCase):
         self.assertNotIn("name", pl.__dict__)
 
     def test_description_is_public_class_attribute(self):
-        Pl = Place()
-        self.assertEqual(str,type(Place.description))
+        pl = Place()
+        self.assertEqual(str, type(Place.description))
         self.assertIn("description", dir(pl))
-        self.assertNotIn("description", pl.__dict__)
+        self.assertNotIn("desctiption", pl.__dict__)
 
     def test_number_rooms_is_public_class_attribute(self):
         pl = Place()
@@ -66,10 +65,10 @@ class TestPlace_instatiation(unittest.TestCase):
     def test_number_bathrooms_is_public_class_attribute(self):
         pl = Place()
         self.assertEqual(int, type(Place.number_bathrooms))
-        self.assertIn("number_bathrooms", pl.__dict__)
+        self.assertIn("number_bathrooms", dir(pl))
         self.assertNotIn("number_bathrooms", pl.__dict__)
-    
-    def test_max_guest_is_pubic_class_attribute(self):
+
+    def test_max_guest_is_public_class_attribute(self):
         pl = Place()
         self.assertEqual(int, type(Place.max_guest))
         self.assertIn("max_guest", dir(pl))
@@ -95,9 +94,9 @@ class TestPlace_instatiation(unittest.TestCase):
 
     def test_amenity_ids_is_public_class_attribute(self):
         pl = Place()
-        self.assertEqual(list. type(Place.amenity_ids))
+        self.assertEqual(list, type(Place.amenity_ids))
         self.assertIn("amenity_ids", dir(pl))
-        self.assertNotIn("amenity_ids", pl.__dict)
+        self.assertNotIn("amenity_ids", pl.__dict__)
 
     def test_two_places_unique_ids(self):
         pl1 = Place()
@@ -110,7 +109,7 @@ class TestPlace_instatiation(unittest.TestCase):
         pl2 = Place()
         self.assertLess(pl1.created_at, pl2.created_at)
 
-    def test_two_places_different_updated_at(self)
+    def test_two_places_different_updated_at(self):
         pl1 = Place()
         sleep(0.05)
         pl2 = Place()
@@ -120,10 +119,10 @@ class TestPlace_instatiation(unittest.TestCase):
         dt = datetime.today()
         dt_repr = repr(dt)
         pl = Place()
-        pl.id ="123456"
+        pl.id = "123456"
         pl.created_at = pl.updated_at = dt
         plstr = pl.__str__()
-        self.assertIn("[Place] (123456)", pl_tr)
+        self.assertIn("[Place] (123456)", plstr)
         self.assertIn("'id': '123456'", plstr)
         self.assertIn("'created_at': " + dt_repr, plstr)
         self.assertIn("'updated_at': " + dt_repr, plstr)
@@ -140,16 +139,14 @@ class TestPlace_instatiation(unittest.TestCase):
         self.assertEqual(pl.created_at, dt)
         self.assertEqual(pl.updated_at, dt)
 
-    def test_instatiation_with_None_kwargs(self):
+    def test_instantiation_with_None_kwargs(self):
         with self.assertRaises(TypeError):
             Place(id=None, created_at=None, updated_at=None)
 
 
+class TestPlace_save(unittest.TestCase):
+    """Unittests for testing save method of the Place class."""
 
-
-class TestState_save(unittest.Testcase):
-    """Unittests for testing save method of the state class."""
-    
     @classmethod
     def setUp(self):
         try:
@@ -163,11 +160,12 @@ class TestState_save(unittest.Testcase):
         except IOError:
             pass
         try:
-            os.rename("tmp","file.json")
+            os.rename("tmp", "file.json")
         except IOError:
             pass
-    def test_two_saves(self):
-        pl + Place()
+
+    def test_one_save(self):
+        pl = Place()
         sleep(0.05)
         first_updated_at = pl.updated_at
         pl.save()
@@ -184,7 +182,7 @@ class TestState_save(unittest.Testcase):
         pl.save()
         self.assertLess(second_updated_at, pl.updated_at)
 
-    def test_save_with_arg(self)
+    def test_save_with_arg(self):
         pl = Place()
         with self.assertRaises(TypeError):
             pl.save(None)
@@ -192,18 +190,18 @@ class TestState_save(unittest.Testcase):
     def test_save_updates_file(self):
         pl = Place()
         pl.save()
-        plid = "place." + pl.id
+        plid = "Place." + pl.id
         with open("file.json", "r") as f:
             self.assertIn(plid, f.read())
 
 
+class TestPlace_to_dict(unittest.TestCase):
+    """Unittests for testing to_dict method of the Place class."""
 
-class  TestPlace_to_dict(unittest.TestCase):
-    """Unittests for testing to_dict method of the place class."""
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Place().to_dict()))
 
-    def test_to_dict_contains_coreect_keys(self):
+    def test_to_dict_contains_correct_keys(self):
         pl = Place()
         self.assertIn("id", pl.to_dict())
         self.assertIn("created_at", pl.to_dict())
@@ -218,8 +216,8 @@ class  TestPlace_to_dict(unittest.TestCase):
         self.assertIn("my_number", pl.to_dict())
 
     def test_to_dict_datetime_attributes_are_strs(self):
-        pl = place()
-        pl_dict - pl.to_dict()
+        pl = Place()
+        pl_dict = pl.to_dict()
         self.assertEqual(str, type(pl_dict["id"]))
         self.assertEqual(str, type(pl_dict["created_at"]))
         self.assertEqual(str, type(pl_dict["updated_at"]))
@@ -230,12 +228,11 @@ class  TestPlace_to_dict(unittest.TestCase):
         pl.id = "123456"
         pl.created_at = pl.updated_at = dt
         tdict = {
-             'id' : '123456',
-             '__class__': 'place',
-             'created_at' : dt.isoformat(),
-             'updated_at' : dt.isoformat(),
+            'id': '123456',
+            '__class__': 'Place',
+            'created_at': dt.isoformat(),
+            'updated_at': dt.isoformat(),
         }
-
         self.assertDictEqual(pl.to_dict(), tdict)
 
     def test_contrast_to_dict_dunder_dict(self):
@@ -247,21 +244,6 @@ class  TestPlace_to_dict(unittest.TestCase):
         with self.assertRaises(TypeError):
             pl.to_dict(None)
 
+
 if __name__ == "__main__":
     unittest.main()
-
-
-                
-
-                
-
-
-
-
-
-
-
-
-
-
-
