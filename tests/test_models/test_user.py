@@ -1,66 +1,36 @@
 #!/usr/bin/python3
-
-"""Unittest for User Class."""
-
+""" Contains unittests for User class """
 import unittest
-
-from ...models.user import User
-
-from ...models.base_model import BaseModel
-
-
-class TestCity(unittest.TestCase):
-    """Test cases User class."""
-
-    def test_instance(self):
-        """test instance."""
-        user = User()
-        self.assertIsInstance(user, User)
-
-    def test_is_class(self):
-        """test instance."""
-        user = User()
-        self.assertEqual(str(type(user)),
-                         "<class 'models.user.User'>")
-
-    def test_is_subclass(self):
-        """test is_subclass."""
-        user = User()
-        self.assertTrue(issubclass(type(user), BaseModel))
-
-    def test_id(self):
-        """test email."""
-        my_user = User()
-        self.assertIsNotNone(my_user.id)
-
-    def test_email(self):
-        """test email."""
-        my_user = User()
-        self.assertEqual(my_user.email, "")
-        my_user.email = "airbnb@mail.com"
-        self.assertEqual(my_user.email, "airbnb@mail.com")
-
-    def test_password(self):
-        """test password."""
-        my_user = User()
-        self.assertEqual(my_user.password, "")
-        my_user.password = "root"
-        self.assertEqual(my_user.password, "root")
-
-    def test_first_name(self):
-        """test first name."""
-        my_user = User()
-        self.assertEqual(my_user.first_name, "")
-        my_user.first_name = "Betty"
-        self.assertEqual(my_user.first_name, "Betty")
-
-    def test_last_name(self):
-        """test last name."""
-        my_user = User()
-        self.assertEqual(my_user.last_name, "")
-        my_user.first_name = "Bar"
-        self.assertEqual(my_user.first_name, "Bar")
+import os
+from models.base_model import BaseModel
+from models.user import User
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestUserClass(unittest.TestCase):
+    """ Tests User class """
+
+    def test_class(self):
+        """ tests class instantiation and class attributes """
+        # create object instance of User Class
+        obj = User()
+        # check if object is an instance of User and parent class
+        self.assertIsInstance(obj, User)
+        self.assertIsInstance(obj, BaseModel)
+        # check if dictionaries contain all expected attributes
+        # __dict__ only contains set attributes so this checks if set
+        self.assertIn("id", obj.__dict__)
+        self.assertIn("created_at", obj.__dict__)
+        self.assertIn("updated_at", obj.__dict__)
+        self.assertIn("email", User.__dict__)
+        self.assertIn("password", User.__dict__)
+        self.assertIn("first_name", User.__dict__)
+        self.assertIn("last_name", User.__dict__)
+        # check if User class attributes initialized correctly
+        self.assertEqual(User.email, "")
+        self.assertEqual(User.password, "")
+        self.assertEqual(User.first_name, "")
+        self.assertEqual(User.last_name, "")
+        self.assertEqual(obj.email, "")
+        self.assertEqual(obj.password, "")
+        self.assertEqual(obj.first_name, "")
+        self.assertEqual(obj.last_name, "")
