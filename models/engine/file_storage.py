@@ -52,19 +52,11 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        if exists(self.__file_path) is False:
-            return
-        
-        with open(self.__file_path) as file:
+        try:
+            with open(self.__file_path) as file:
                 serialized_content = json.load(file)
                 for item in serialized_content.values():
                     class_name = item['__class__']
                     self.new(eval(class_name + "(**" + str(item) + ")"))
-        # try:
-        #     with open(self.__file_path) as file:
-        #         serialized_content = json.load(file)
-        #         for item in serialized_content.values():
-        #             class_name = item['__class__']
-        #             self.new(eval(class_name + "(**" + str(item) + ")"))
-        # except FileNotFoundError:
-        #     pass
+        except FileNotFoundError:
+            pass
