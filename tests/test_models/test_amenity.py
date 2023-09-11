@@ -1,47 +1,27 @@
 #!/usr/bin/python3
-
-"""Unittest for Amenity Class."""
-
+""" Contains unittests for Amenity class """
 import unittest
+import os
+from models.base_model import BaseModel
+from models.amenity import Amenity
 
-from ...models.amenity import Amenity
 
-from ...models.base_model import BaseModel
-
-
-class TestAmenity(unittest.TestCase):
-    """Test cases for  Amenity class."""
+class TestAmenityClass(unittest.TestCase):
+    """ Tests Amenity class """
 
     def test_class(self):
-        """test instantiation and attributes"""
-        amenity = Amenity()
-        self.assertIsInstance(amenity, Amenity)
-        self.assertIsInstance(amenity, BaseModel)
-        self.assertIn("id", amenity.__dict__)
-        self.assertIn("created_at", amenity.__dict__)
-        self.assertIn("updated_at", amenity.__dict__)
+        """ tests class instantiation and class attributes """
+        # create object instance of Amenity Class
+        obj = Amenity()
+        # check if object is an instance of Amenity and parent class
+        self.assertIsInstance(obj, Amenity)
+        self.assertIsInstance(obj, BaseModel)
+        # check if dictionaries contain all expected attributes
+        # __dict__ only contains set attributes so this checks if set
+        self.assertIn("id", obj.__dict__)
+        self.assertIn("created_at", obj.__dict__)
+        self.assertIn("updated_at", obj.__dict__)
         self.assertIn("name", Amenity.__dict__)
+        # check if Amenity class attribute initialized correctly
         self.assertEqual(Amenity.name, "")
-        self.assertEqual(amenity.name, "")
-
-    # def test_instance(self):
-    #     """test instance."""
-    #     amenity = Amenity()
-    #     self.assertIsInstance(amenity, Amenity)
-
-    # def test_is_class(self):
-    #     """test instance."""
-    #     amenity = Amenity()
-    #     self.assertEqual(str(type(amenity)),
-    #                      "<class 'models.amenity.Amenity'>")
-
-    # def test_is_subclass(self):
-    #     """test is_subclass."""
-    #     amenity = Amenity()
-    #     self.assertIn(amenity, BaseModel)
-
-    # def test_attr(self):
-    #     """test is_subclass."""
-    #     amenity = Amenity()
-    #     self.assertEqual(amenity.name, "")
-    #     self.assertEqual(Amenity.name, "")
+        self.assertEqual(obj.name, "")
