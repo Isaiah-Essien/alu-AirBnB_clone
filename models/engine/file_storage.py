@@ -52,11 +52,32 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        try:
-            with open(self.__file_path) as file:
-                serialized_content = json.load(file)
-                for item in serialized_content.values():
-                    class_name = item['__class__']
-                    self.new(eval(class_name + "(**" + str(item) + ")"))
-        except FileNotFoundError:
-            pass
+        classes = {
+            "Amenity": Amenity,
+            "BaseModel": BaseModel,
+            "City": City,
+            "Place": Place,
+            "Review": Review,
+            "State": State,
+            "User": User,
+        }
+        
+        if exists(self.__file_path) is False:
+            return
+        
+        with open(FileStorage.__file_path, 'r') as file:
+            data = json.load(file)
+            for key, value in data.items():
+                class_name, obj_id = key.split('.')
+                obj_class = classes[class_name]
+                obj_instance = obj_class(**value)
+                FileStorage.__objects[key] = obj_instance
+        
+        # try:
+        #     with open(self.__file_path) as file:
+        #         serialized_content = json.load(file)
+        #         for item in serialized_content.values():
+        #             class_name = item['__class__']
+        #             self.new(eval(class_name + "(**" + str(item) + ")"))
+        # except FileNotFoundError:
+        #     pass
