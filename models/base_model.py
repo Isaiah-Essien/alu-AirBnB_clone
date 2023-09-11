@@ -33,7 +33,7 @@ class BaseModel:
                 kwargs["created_at"], tform)
             kwargs["updated_at"] = datetime.strptime(
                 kwargs["updated_at"], tform)
-            del kwargs["__class__"]
+            # del kwargs["__class__"]
             self.__dict__.update(kwargs)
         else:
             self.id = str(uuid4())
