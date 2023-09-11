@@ -1,41 +1,33 @@
 #!/usr/bin/python3
-
-"""Unittest for Review Class."""
-
+""" Contains unittests for Review class """
 import unittest
-
-from ...models.review import Review
-
-from ...models.base_model import BaseModel
-
-
-class TestReview(unittest.TestCase):
-    """Test cases Review class."""
-
-    def test_instance(self):
-        """test instance."""
-        review = Review()
-        self.assertIsInstance(review, Review)
-
-    def test_is_class(self):
-        """test instance."""
-        review = Review()
-        self.assertEqual(str(type(review)),
-                         "<class 'models.review.Review'>")
-
-    def test_is_subclass(self):
-        """test is_subclass."""
-        review = Review()
-        self.assertTrue(issubclass(type(review), BaseModel))
-
-    def test_text(self):
-        """test is_subclass."""
-        review = Review()
-        self.assertIsNotNone(review.id)
-        self.assertEqual(review.text, "")
-        self.assertEqual(review.user_id, "")
-        self.assertEqual(review.place_id, "")
+import os
+from models.base_model import BaseModel
+from models.review import Review
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestReviewClass(unittest.TestCase):
+    """ Tests Review class """
+
+    def test_class(self):
+        """ tests class instantiation and class attributes """
+        # create object instance of Review Class
+        obj = Review()
+        # check if object is an instance of Review and parent class
+        self.assertIsInstance(obj, Review)
+        self.assertIsInstance(obj, BaseModel)
+        # check if dictionaries contain all expected attributes
+        # __dict__ only contains set attributes so this checks if set
+        self.assertIn("id", obj.__dict__)
+        self.assertIn("created_at", obj.__dict__)
+        self.assertIn("updated_at", obj.__dict__)
+        self.assertIn("place_id", Review.__dict__)
+        self.assertIn("user_id", Review.__dict__)
+        self.assertIn("text", Review.__dict__)
+        # check if Review class attribute initialized correctly
+        self.assertEqual(Review.place_id, "")
+        self.assertEqual(Review.user_id, "")
+        self.assertEqual(Review.text, "")
+        self.assertEqual(obj.place_id, "")
+        self.assertEqual(obj.user_id, "")
+        self.assertEqual(obj.text, "")
