@@ -73,5 +73,5 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(dict_repr['__class__'] == base.__class__.__name__)
 
 
-if __name__ == "__main__":
-    unittest.main()
+# if __name__ == "__main__":
+#     unittest.main()
