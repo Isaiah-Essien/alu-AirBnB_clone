@@ -3,17 +3,15 @@
 
 """Unittest module for the BaseModel Class."""
 
-from models import storage
-from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
+from ...models import storage
+from ...models.base_model import BaseModel
+from ...models.engine.file_storage import FileStorage
 from datetime import datetime
 import json
 import os
-import re
 import time
 import unittest
 import time
-import uuid
 from io import StringIO
 from unittest.mock import patch
 
@@ -73,5 +71,5 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(dict_repr['__class__'] == base.__class__.__name__)
 
 
-# if __name__ == "__main__":
-#     unittest.main()
+if __name__ == "__main__":
+    unittest.main()

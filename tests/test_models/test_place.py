@@ -4,11 +4,11 @@
 
 import unittest
 
-from models.place import Place
-from models.city import City
-from models.user import User
+from ...models.place import Place
+from ...models.city import City
+from ...models.user import User
 
-from models.base_model import BaseModel
+from ...models.base_model import BaseModel
 
 
 class TestPlace(unittest.TestCase):

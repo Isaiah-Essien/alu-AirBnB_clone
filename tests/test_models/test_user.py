@@ -4,9 +4,9 @@
 
 import unittest
 
-from models.user import User
+from ...models.user import User
 
-from models.base_model import BaseModel
+from ...models.base_model import BaseModel
 
 
 class TestCity(unittest.TestCase):
