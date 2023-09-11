@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Defines FileStorage class."""
 import json
-
+from os.path import exists
 
 class FileStorage:
     """
@@ -52,11 +52,19 @@ class FileStorage:
         from models.amenity import Amenity
         from models.review import Review
 
-        try:
-            with open(self.__file_path) as file:
+        if exists(self.__file_path) is False:
+            return
+        
+        with open(self.__file_path) as file:
                 serialized_content = json.load(file)
                 for item in serialized_content.values():
                     class_name = item['__class__']
                     self.new(eval(class_name + "(**" + str(item) + ")"))
-        except FileNotFoundError:
-            pass
+        # try:
+        #     with open(self.__file_path) as file:
+        #         serialized_content = json.load(file)
+        #         for item in serialized_content.values():
+        #             class_name = item['__class__']
+        #             self.new(eval(class_name + "(**" + str(item) + ")"))
+        # except FileNotFoundError:
+        #     pass
