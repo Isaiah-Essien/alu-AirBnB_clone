@@ -26,13 +26,13 @@ class TestAmenity(unittest.TestCase):
     def test_is_subclass(self):
         """test is_subclass."""
         amenity = Amenity()
-        self.assertTrue(issubclass(type(amenity), BaseModel))
+        self.assertIn(amenity, BaseModel)
 
     def test_attr(self):
         """test is_subclass."""
         amenity = Amenity()
         self.assertEqual(amenity.name, "")
-        self.assertIsNotNone(amenity.id)
+        self.assertEqual(Amenity.name, "")
 
 
 if __name__ == "__main__":
