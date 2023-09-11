@@ -1,43 +1,30 @@
 #!/usr/bin/python3
-
-"""Unittest for Amenity Class."""
-
+""" Contains unittests for City class """
 import unittest
-
-from ...models.city import City
-
-from ...models.base_model import BaseModel
-
-
-class TestCity(unittest.TestCase):
-    """Test cases City class."""
-
-    def test_instance(self):
-        """test instance."""
-        city = City()
-        self.assertIsInstance(city, City)
-
-    def test_is_class(self):
-        """test instance."""
-        city = City()
-        self.assertEqual(str(type(city)),
-                         "<class 'models.city.City'>")
-
-    def test_is_subclass(self):
-        """test is_subclass."""
-        city = City()
-        self.assertTrue(issubclass(type(city), BaseModel))
-
-    def test_name(self):
-        """test is_subclass."""
-        city = City()
-        self.assertEqual(city.name, "")
-
-    def test_state_id(self):
-        """test is_subclass."""
-        city = City()
-        self.assertEqual(city.state_id, "")
+import os
+from models.base_model import BaseModel
+from models.city import City
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestCityClass(unittest.TestCase):
+    """ Tests City class """
+
+    def test_class(self):
+        """ tests class instantiation and class attributes """
+        # create object instance of City Class
+        obj = City()
+        # check if object is an instance of City and parent class
+        self.assertIsInstance(obj, City)
+        self.assertIsInstance(obj, BaseModel)
+        # check if dictionaries contain all expected attributes
+        # __dict__ only contains set attributes so this checks if set
+        self.assertIn("id", obj.__dict__)
+        self.assertIn("created_at", obj.__dict__)
+        self.assertIn("updated_at", obj.__dict__)
+        self.assertIn("name", City.__dict__)
+        self.assertIn("state_id", City.__dict__)
+        # check if City class attribute initialized correctly
+        self.assertEqual(City.name, "")
+        self.assertEqual(City.state_id, "")
+        self.assertEqual(obj.name, "")
+        self.assertEqual(obj.state_id, "")
